@@ -1,7 +1,8 @@
 import psycopg2
 import pandas as pd
 from IPython.core.display_functions import display
-import psycopg2.errors as pe  
+import psycopg2.errors as pe 
+from faker import Faker 
 
 # 1. Creating tables
 create_table_status = """
@@ -47,8 +48,7 @@ VALUES (1, 'analyst', 'perform data analysis', 1), (2, 'ingeneer', 'create softs
 select_tasks_by_id = """
 SELECT * FROM tasks WHERE id IN (SELECT id FROM users WHERE id=2); """
 select_task_by_status_id = """
-SELECT * FROM tasks WHERE status_id IN (SELECT id
-    FROM status WHERE id =1);
+SELECT * FROM tasks WHERE status_id =2;
 """
 update_status_id= """
 UPDATE tasks SET status_id = 2 WHERE id =1;
@@ -81,12 +81,13 @@ status_id FROM tasks
 GROUP BY status_id;
 """
 select_tasks_by_email= """
-SELECT u.fullname, u.email IN (SELECT email FROM users WHERE email LIKE 'gmail.com'), t.description AS tasks
+SELECT u.fullname, u.email, t.description AS tasks
 FROM users AS u
-INNER JOIN tasks AS t ON t.id = u.id;
+INNER JOIN tasks AS t ON t.user_id = u.id
+WHERE email LIKE '%gmail.com';
 """
 select_null_description= """
-SELECT * FROM tasks WHERE description LIKE '%0%'; 
+SELECT * FROM tasks WHERE description LIKE ' '; 
 """
 select_user_in_progress= """
 SELECT u.fullname, u.email, t.status_id IN(SELECT status_id FROM tasks WHERE status_id=2) AS tasks
@@ -95,11 +96,10 @@ INNER JOIN tasks AS t ON t.id = u.id;
 """
 count_tasks_by_left_join = """
 SELECT t.title, t.id, u.id AS users
+COUNT(t.id) as total_tasks, t.id 
 FROM tasks AS t
-INNER JOIN users AS u ON u.id = t.id
-SELECT COUNT(tasks.id) as total_tasks, 
-tasks.id FROM tasks
-GROUP BY tasks.id;
+INNER JOIN users AS u ON u.user_id = t.id
+GROUP BY t.id;
 """
 # 4. Connecting 
 try:
