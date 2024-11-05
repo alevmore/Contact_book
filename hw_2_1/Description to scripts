@@ -1,0 +1,16 @@
+This Python script  in “SQLite_operations.py” connects to an SQLite database and performs various database operations. It uses the sqlite3 library to interact with an SQLite database named data.sqlite. The script includes commands to create tables, insert data, update records, delete records, and query the database. The tables created are users, status, and tasks, with relationships set up using foreign keys.
+The script handles various SQL queries, including:
+•	Creating tables for users, status, and tasks
+•	Inserting new records into the tasks table
+•	Selecting records based on different criteria
+•	Updating records, such as changing task status or updating a user's name
+•	Deleting records based on specific conditions
+•	Performing JOIN operations to link tables and retrieve relevant information
+•	Using aggregate functions like COUNT to get the number of tasks grouped by status
+Additionally, the script uses pandas to display query results as DataFrames and handles errors gracefully using exception handling.
+This Python script in “seed.py” uses sqlite3 and Faker to populate a SQLite database named data.sqlite with sample data. The script connects to the database and fills three tables: users, status, and tasks. Using the Faker library, random user information and task descriptions are generated. The data includes names, email addresses, job titles, text descriptions, and timestamps.
+Technologies Used
+1.	Python: The primary programming language used to write the script.
+2.	SQLite: A lightweight, file-based database system used to store and manage data.
+3.	pandas: A data analysis and manipulation library used for displaying query results in a tabular format.
+4.	Faker: A Python library used to generate random fake data, such as names, email addresses, and job titles.
