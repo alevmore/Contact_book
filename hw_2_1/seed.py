@@ -3,14 +3,14 @@ from faker import Faker
 import random
 from datetime import datetime
 
-# З'єднання з базою даних SQLite
+# Connecting to a SQLite database
 conn = sqlite3.connect('data.sqlite')
 cursor = conn.cursor()
 
-# Ініціалізація Faker
+# Initialisation Faker
 fake = Faker()
 
-# Заповнення таблиці users
+# Filling in the users table
 for _ in range(10):
     fullname = fake.name()
     email = fake.email()
@@ -19,7 +19,7 @@ for _ in range(10):
         VALUES (?, ?, ?)
     ''', (fullname, email, datetime.now()))
 
-# Заповнення таблиці status
+# Filling in the status table
 status_names = ['new', 'in progress', 'completed']
 for status_name in status_names:
     cursor.execute('''
@@ -27,7 +27,7 @@ for status_name in status_names:
         VALUES (?, ?)
     ''', (status_name, datetime.now()))
 
-# Заповнення таблиці tasks
+# Filling in the tasks table
 for _ in range(20):
     title = fake.job()
     description = fake.text()
@@ -38,10 +38,10 @@ for _ in range(20):
         VALUES (?, ?, ?, ?, ?)
     ''', (title, description, status_id, user_id, datetime.now()))
 
-# Збереження змін у базі даних
+# Saving changes in database 
 conn.commit()
 
-# Закриття з'єднання
+# Close connection
 conn.close()
 
-print("Дані успішно заповнено!")
+print("Data successfully filled in!")
